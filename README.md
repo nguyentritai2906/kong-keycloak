@@ -36,5 +36,12 @@ curl -s -X POST http://localhost:8001/plugins \
 -d config.client_id=kong \
 -d config.client_secret=${CLIENT_SECRET} \
 -d config.discovery=http://${HOST_IP}:8180/realms/master/.well-known/openid-configuration \
-| python -mjson.tool
+| jq
+```
+
+### Disable SSL
+```
+docker exec -it <keycloak-container-id> bash
+/opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/ --realm master --user admin
+/opt/keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE
 ```
