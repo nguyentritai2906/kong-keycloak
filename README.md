@@ -41,7 +41,5 @@ curl -s -X POST http://localhost:8001/plugins \
 
 ### Disable SSL
 ```
-docker exec -it <keycloak-container-id> bash
-/opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/ --realm master --user admin
-/opt/keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE
+docker ps -a | grep keycloak | cut -f 1 -d ' ' | xargs -I {} docker exec {} bash -c "/opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/ --realm master --user admin --password admin && /opt/keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE"
 ```
